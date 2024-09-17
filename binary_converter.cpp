@@ -12,27 +12,28 @@ int main(int argc, char const *argv[])
 	std::cout<<size<<std::endl;
 
 	std::vector<char> ndata(size);
-	std::ifstream myfile;
-	myfile.open("data.txt");
-
-    if (!myfile) {
-        std::cerr << "Error opening file." << std::endl;
-        return -1;
-    }
-
-    myfile.read(ndata.data(), size);
-
-    if (!myfile) {
+	
+//getting input data.txt
+	std::ifstream infile("data.txt", std::ios::binary);
+    if (!infile.read(ndata.data(), size)) {
         std::cerr << "Error reading file." << std::endl;
         return -1;
     }
 
-	myfile.close();
-	for (char c : ndata) {
+//writing to output
+    std::ofstream outfile("data.bin");
+    if (!outfile) {
+        std::cerr << "Error opening output file." << std::endl;
+        return -1;
+    }
+    for (char c : ndata) {
 		std::bitset<8> x(c);
-        std::cout << x<<std::endl;
+		outfile<<x<<std::endl;
+		//std::cout << x<<std::endl;
     }
 
-    std::cout << std::endl;
+	std::uintmax_t sizeF = std::filesystem::file_size("data.bin");
+	std::cout<<sizeF<<std::endl;
+
 	return 0;
 }
