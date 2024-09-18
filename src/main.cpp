@@ -5,7 +5,7 @@ int main() {
     std::cout << "OpenCV version: " << CV_VERSION << std::endl;
     std::cout << "WORKING " << std::endl;
     
-    cv::Mat image = cv::imread("input.png");
+    cv::Mat image = cv::imread("../assets/input.png");
 
     if (image.empty())
     {
@@ -18,3 +18,4 @@ int main() {
     cv::waitKey(0);
     return 0;
 }
+//g++ main.cpp -o main `pkg-config --cflags --libs opencv`
