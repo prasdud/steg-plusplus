@@ -8,15 +8,21 @@
 
 uint32_t crcTable[256];
 
+// Initialize the CRC table with the standard CRC-32 polynomial
 void generateCRCTable() {
+    uint32_t polynomial = 0xEDB88320;
     for (uint32_t i = 0; i < 256; ++i) {
-        uint32_t c = i;
-        for (int j = 0; j < 8; ++j) {
-            c = (c & 1) ? (0xEDB88320 ^ (c >> 1)) : (c >> 1);
+        uint32_t crc = i;
+        for (uint32_t j = 0; j < 8; ++j) {
+            if (crc & 1)
+                crc = (crc >> 1) ^ polynomial;
+            else
+                crc >>= 1;
         }
-        crcTable[i] = c;
+        crcTable[i] = crc;
     }
 }
+
 
 uint32_t calculate_crc(const uint8_t* data, size_t length) {
     uint32_t crc = 0xFFFFFFFF;

@@ -4,8 +4,7 @@
 #include <vector>
 #include <zlib.h>
 #include <arpa/inet.h>
-
-
+#include <cstring>
 
 uint32_t crcTable[256];
 

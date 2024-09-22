@@ -1,0 +1,10 @@
+ABOUT PNG
+	png file structure
+	png file verification
+
+ABOUT CRC
+	need of crc
+	working of crc
+		crc table
+		crc computation algorithm
+	why this starting polnomial 0xEDB88320
