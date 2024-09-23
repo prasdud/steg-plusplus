@@ -8,3 +8,69 @@ ABOUT CRC
 		crc table
 		crc computation algorithm
 	why this starting polnomial 0xEDB88320
+
+
+about rgb, pixels and image resolution
+	computers only understand 0's and 1's, we already know that, but how does a computer percieve pictures or images? When processing or performing operations on images we need to break down the image.
+
+	an image is just a collection of pixels. a full hd image has resolution of 1920x1080. This means that the image has 1920 times 1080 amount of pixels (2073600). There is a correlation between the resolution of an image and its clarity, the higher the resolution higher its clarity, also the space required to hold it is increased.
+
+	coming back to pixels, each pixel has an RGB value, red green and blue. why these colors? rgb can produce a total of 16,777,216 colors. this is calculated based on combination of the three color channels red green and blue, 256 * 256 * 256. each integer value represents the intensity of that primary color.
+
+	buy why rgb?
+		apparently it has something to do with how our eyes and brain percieve colors, further reading https://en.wikipedia.org/wiki/RGB_color_model
+
+		but even then, almost 16 million colors is enough for whatever color it is you require.
+	
+	are there some colors rgb cannot produce?
+		yes there are, 
+		Yes, there are colors that RGB cannot produce. These limitations arise from the nature of the RGB color model and the way human vision perceives color. Here are some key points:
+
+		Out of Gamut Colors: RGB cannot reproduce certain colors that fall outside its gamut, such as some shades of deep reds, vibrant purples, and certain pastel colors. These colors may exist in other color spaces, like CMYK or LAB, which can represent a wider range of hues.
+
+		Metameric Colors: Colors that appear the same under one lighting condition may look different under another. RGB cannot accurately represent all metameric colors, which can lead to discrepancies in color matching.
+
+		Fluorescent Colors: Some highly saturated fluorescent colors cannot be accurately represented in the RGB color space because they exceed the range of colors that RGB can produce.
+
+		Subtle Shades: Very subtle variations in color, especially in low-light conditions, may not be well represented in RGB, as the model is more suited to vibrant and saturated colors.
+
+		Non-visible Colors: Colors outside the visible spectrum, such as ultraviolet and infrared, cannot be represented by RGB, as it is limited to the range of colors visible to the human eye.
+
+		While RGB is versatile and widely used, other color models and spaces (like CMYK, HSL, or LAB) are sometimes employed to capture a broader range of colors, especially in printing and specialized applications.
+
+png file structure
+	so we have established images are just pixels with rgb values, so does that mean i can just type in rgb values and save them with an image extension and VIOLA, an image?
+	its a wee bit more complicated than that.
+
+	image files have formats to follow, structures, that tell a computer what format they are.
+	the people who invent these image formats come up with their structures.
+
+	why png
+		png stands for portable network graphics, an image format that supports lossless data compression.
+		when i was a kid, i always opted for jpeg file formats, just because they sound cooler. now i am cursed with knowledge and png is way better.
+		jpeg, even though it has a cooler extension, is lossy, the image data is not maintained properly. PNG however is lossless
+
+	a png file consists of a png signature, followed by a series of chunks
+
+	png file structure allows for multiple ancillary chunks, however we only need a select few for a basic png
+
+	signature
+		The first eight bytes of a PNG file always contain the following (decimal) values:
+		137 80 78 71 13 10 26 10
+
+
+	chunks
+		each chunk consists of four parts
+			length
+			chunk type
+			chunk data
+			crc
+		Chunks can appear in any order, subject to the restrictions placed on each chunk type. (One notable restriction is that IHDR must appear first and IEND must appear last; thus the IEND chunk serves as an end-of-file marker.) Multiple chunks of the same type can appear, but only if specifically permitted for that type.
+
+
+	ihdr
+	idat
+	iend
+
+CRC
+	
