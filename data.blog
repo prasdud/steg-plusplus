@@ -57,7 +57,10 @@ png file structure
 	signature
 		The first eight bytes of a PNG file always contain the following (decimal) values:
 		137 80 78 71 13 10 26 10
-
+		89 50 4E 47 0D 0A 1A 0A
+		89 - non ascii byte to detecct issues with file transfer
+		50 4E 47 - "PNG" in ascii
+		remaining - control characters to check for file corruption
 
 	chunks
 		each chunk consists of four parts
@@ -67,10 +70,22 @@ png file structure
 			crc
 		Chunks can appear in any order, subject to the restrictions placed on each chunk type. (One notable restriction is that IHDR must appear first and IEND must appear last; thus the IEND chunk serves as an end-of-file marker.) Multiple chunks of the same type can appear, but only if specifically permitted for that type.
 
+		chunk structure
+			Length (4 bytes) | Type (4 bytes) | Data (variable) | CRC (4 bytes)
 
-	ihdr
-	idat
-	iend
+
+	critical chunks
+		ihdr
+			image header
+			this chunk contains basic information about the image
+
+		idat
+			image data
+			its the body, it contains the actual compressed image data
+			there can exist multiple idat chunks, these chunks are concatenated to form the complete image data
+		iend
+			this marks the end of the png file
+			this chunk is always empty
 
 CRC
 	
