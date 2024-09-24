@@ -15,7 +15,7 @@ int main() {
     	return -1;
     }
 
-    std::ofstream outfile("image_dat.rgb");
+    std::ofstream outfile("image_dat.csv");
     if (!outfile) {
         std::cerr << "Error opening output file." << std::endl;
         return -1;
@@ -31,8 +31,8 @@ int main() {
             }
             else if(image.type() == CV_8UC3)
             {
-                std::cout << (int)image.at<cv::Vec3b>(i,j)[0] << " " << (int)image.at<cv::Vec3b>(i,j)[1] << " " << (int)image.at<cv::Vec3b>(i,j)[2] << std::endl;
-                outfile << (int)image.at<cv::Vec3b>(i,j)[0] << " " << (int)image.at<cv::Vec3b>(i,j)[1] << " " << (int)image.at<cv::Vec3b>(i,j)[2] << std::endl;
+                std::cout << (int)image.at<cv::Vec3b>(i,j)[2] << "," << (int)image.at<cv::Vec3b>(i,j)[1] << "," << (int)image.at<cv::Vec3b>(i,j)[0] << std::endl;
+                outfile << (int)image.at<cv::Vec3b>(i,j)[2] << "," << (int)image.at<cv::Vec3b>(i,j)[1] << "," << (int)image.at<cv::Vec3b>(i,j)[0]<<",";
 
                 //image.at<cv::Vec3b>(i,j)[0] = 255;
                 //image.at<cv::Vec3b>(i,j)[1] = 255;

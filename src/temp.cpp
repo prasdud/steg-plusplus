@@ -24,12 +24,23 @@ void generateCRCTable() {
 }
 
 
+// uint32_t calculate_crc(const uint8_t* data, size_t length) {
+//     uint32_t crc = 0xFFFFFFFF;
+//     for (size_t i = 0; i < length; ++i) {
+//         crc = crcTable[(crc ^ data[i]) & 0xFF] ^ (crc >> 8);
+//     }
+//     return crc ^ 0xFFFFFFFF;
+// }
+
 uint32_t calculate_crc(const uint8_t* data, size_t length) {
-    uint32_t crc = 0xFFFFFFFF;
+    uint32_t crc = 0xFFFFFFFF;  // Initial value
+
     for (size_t i = 0; i < length; ++i) {
-        crc = crcTable[(crc ^ data[i]) & 0xFF] ^ (crc >> 8);
+        uint8_t byte = data[i];
+        crc = (crc >> 8) ^ crcTable[(crc ^ byte) & 0xFF];
     }
-    return crc ^ 0xFFFFFFFF;
+
+    return crc ^ 0xFFFFFFFF;  // Final XOR value
 }
 
 void write_chunk(std::ofstream& file, const char* type, const uint8_t* data, uint32_t length) {
