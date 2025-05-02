@@ -130,7 +130,7 @@ void write_png(const std::vector<uint8_t> &pixel_data, uint32_t width, uint32_t 
 
 int main() {
 
-    std::ifstream file("input.csv");
+    std::ifstream file("output.csv");
     if (!file.is_open()){
         std::cerr<<"File cannot be opened"<<std::endl;
         return 0;
