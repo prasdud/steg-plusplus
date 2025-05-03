@@ -7,7 +7,7 @@ int main() {
     std::cout << "OpenCV version: " << CV_VERSION << std::endl;
     std::cout << "WORKING " << std::endl;
     
-    cv::Mat image = cv::imread("../assets/input.png");
+    cv::Mat image = cv::imread("../../assets/output/output.png");
 
     if (image.empty())
     {
@@ -15,7 +15,7 @@ int main() {
     	return -1;
     }
 
-    std::ofstream outfile("image_dat.csv");
+    std::ofstream outfile("../../assets/output/output_image_dat.csv");
     if (!outfile) {
         std::cerr << "Error opening output file." << std::endl;
         return -1;
@@ -32,7 +32,7 @@ int main() {
             else if(image.type() == CV_8UC3)
             {
                 std::cout << (int)image.at<cv::Vec3b>(i,j)[2] << "," << (int)image.at<cv::Vec3b>(i,j)[1] << "," << (int)image.at<cv::Vec3b>(i,j)[0] << std::endl;
-                outfile << (int)image.at<cv::Vec3b>(i,j)[2] << "," << (int)image.at<cv::Vec3b>(i,j)[1] << "," << (int)image.at<cv::Vec3b>(i,j)[0]<<",";
+                outfile << (int)image.at<cv::Vec3b>(i,j)[2] << "," << (int)image.at<cv::Vec3b>(i,j)[1] << "," << (int)image.at<cv::Vec3b>(i,j)[0]<<std::endl;
 
                 //image.at<cv::Vec3b>(i,j)[0] = 255;
                 //image.at<cv::Vec3b>(i,j)[1] = 255;
@@ -53,4 +53,4 @@ int main() {
     cv::waitKey(0);
     return 0;
 }
-//g++ main.cpp -o main `pkg-config --cflags --libs opencv`
+//g++ convert_png_to_rgb.cpp -o convert_png_to_rgb `pkg-config --cflags --libs opencv4`

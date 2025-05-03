@@ -5,6 +5,15 @@
 #include <filesystem>
 
 
+/**
+ * @brief converts a binary file to its pdf equivalent
+ * 
+ * @while 
+ * 
+ * @return int 
+ */
+
+
 int main() {
 	std::uintmax_t size = std::filesystem::file_size("data.bin");
 	std::cout<<size<<std::endl;

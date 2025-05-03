@@ -65,7 +65,7 @@ void write_chunk(std::ofstream& file, const char* type, const uint8_t* data, uin
 }
 
 void write_png(const std::vector<uint8_t> &pixel_data, uint32_t width, uint32_t height) {
-    std::ofstream file("output.png", std::ios::binary);
+    std::ofstream file("../../assets/output/output.png", std::ios::binary);
     
     if (!file) {
         std::cerr << "Error: Could not open file for writing." << std::endl;
@@ -128,31 +128,43 @@ void write_png(const std::vector<uint8_t> &pixel_data, uint32_t width, uint32_t 
     std::cout << "All Chunks written." << std::endl;
 }
 
+// Function to read RGB data from a CSV file
+std::vector<std::vector<int>> readRGBFromCSV(const std::string& filePath) {
+    std::ifstream file(filePath);
+    std::vector<std::vector<int>> rgbData;
+    std::string line;
+
+    while (std::getline(file, line)) {
+        std::vector<int> rgb;
+        size_t pos = 0;
+        while ((pos = line.find(',')) != std::string::npos) {
+            rgb.push_back(std::stoi(line.substr(0, pos)));
+            line.erase(0, pos + 1);
+        }
+        rgb.push_back(std::stoi(line));
+        rgbData.push_back(rgb);
+    }
+    return rgbData;
+}
+
 int main() {
 
-    std::ifstream file("output.csv");
-    if (!file.is_open()){
-        std::cerr<<"File cannot be opened"<<std::endl;
-        return 0;
-    }
-    
-    std::string line;
-    std::getline(file, line);
-    std::stringstream ss(line);
-    std::string value;
-    std::vector<uint8_t> pixelData;
+    const std::string outputCsvFilePath = "../../assets/output/output.csv";
 
-
-    while (std::getline(ss, value, ',')) {
-        pixelData.push_back(static_cast<uint8_t>(std::stoi(value)));
-    }
-
-    file.close();
+    std::vector<std::vector<int>> rgbData = readRGBFromCSV(outputCsvFilePath);
 
     generateCRCTable();
 
     uint32_t width = 912;
     uint32_t height = 513;
+
+    std::vector<uint8_t> pixelData;
+
+    for (const auto& rgb : rgbData) {
+        for (int value : rgb) {
+            pixelData.push_back(static_cast<uint8_t>(value));
+        }
+    }
 
     write_png(pixelData, width, height);
     

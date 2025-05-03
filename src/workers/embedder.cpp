@@ -7,6 +7,7 @@
 // Function to read binary data from a file
 std::vector<uint8_t> readBinaryFile(const std::string& filePath) {
     std::ifstream file(filePath, std::ios::binary);
+    std::cout<< "File read, returning to main..."<< std::endl;
     return std::vector<uint8_t>(std::istreambuf_iterator<char>(file), {});
 }
 
@@ -66,21 +67,30 @@ void writeRGBToCSV(const std::string& filePath, const std::vector<std::vector<in
 
 int main() {
     // File paths
-    const std::string pdfFilePath = "data.pdf";
-    const std::string rgbCsvFilePath = "input.csv";
-    const std::string outputCsvFilePath = "output.csv";
+    const std::string binFilePath = "../../assets/output/data.bin";
+    const std::string rgbCsvFilePath = "../../assets/output/image_dat.csv";
+    const std::string outputCsvFilePath = "../../assets/output/output.csv";
 
     // Read binary data from PDF
-    std::vector<uint8_t> binaryData = readBinaryFile(pdfFilePath);
+    std::cout<< "Reading binary data..."<< std::endl;
+    std::vector<uint8_t> binaryData = readBinaryFile(binFilePath);
+    std::cout<< "Binary data read."<< std::endl;
 
     // Read RGB data from CSV
+    std::cout<< "Reading RGB data..."<< std::endl;
     std::vector<std::vector<int>> rgbData = readRGBFromCSV(rgbCsvFilePath);
+    std::cout<< "RGB data read."<< std::endl;
 
     // Embed binary data into RGB data
+    std::cout<< "Embedding data..."<< std::endl;
     embedData(rgbData, binaryData);
+    std::cout<< "Embedding done."<< std::endl;
+
 
     // Write modified RGB data back to CSV
+    std::cout<< "Writing output RGB..."<< std::endl;
     writeRGBToCSV(outputCsvFilePath, rgbData);
+    std::cout<< "Output RGB written."<< std::endl;
 
     std::cout << "Data embedding completed. Output written to " << outputCsvFilePath << std::endl;
     return 0;
